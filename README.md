@@ -101,13 +101,14 @@ cd wasteland-engine
 npm install
 ```
 
-Create a `.env` file (see `.env.example`):
+Copy `.env.example` to `.env` and fill it in:
 
 ```
 GEMINI_API_KEY=your-api-key-here
+JWT_SECRET=any-random-string-here
 ```
 
-You'll need a [Google AI Studio](https://aistudio.google.com/) API key with access to `gemini-3-flash-preview`.
+You'll need a [Google AI Studio](https://aistudio.google.com/) API key with access to `gemini-3-flash-preview`. For `JWT_SECRET`, any random string works (e.g. `openssl rand -base64 32`).
 
 ```bash
 npm run dev
