@@ -13,7 +13,11 @@ It's a Fallout-style browser RPG built around a five-stage AI content generation
   <img src="imgs/3.png" alt="Login screen" width="48%" />
 </p>
 
-https://github.com/user-attachments/assets/1.mp4
+
+
+https://github.com/user-attachments/assets/429cfea7-5e4c-404f-b6a7-6618d59fe9d9
+
+
 
 ## How the Pipeline Works
 
