@@ -1,0 +1,14 @@
+node_modules/
+build/
+dist/
+coverage/
+.DS_Store
+*.log
+.env*
+!.env.example
+game.db
+game.db-shm
+game.db-wal
+.worktrees/
+.codebase-reckoning/
+.codebase-intent/

@@ -1,0 +1,5 @@
+{
+  "name": "Remix: Wasteland Engine",
+  "description": "A fully data-driven Fallout-style RPG engine with AI-generated narrative systems.",
+  "requestFramePermissions": []
+}

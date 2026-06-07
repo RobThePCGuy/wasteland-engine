@@ -1,0 +1,36 @@
+Cloudflare Handoff & Architecture Checklist (for Claude Code)
+Porting this custom Node/Express RPG engine to Cloudflare Workers or Pages is a great choice for globally distributed latency, but it requires addressing a few framework/runtime changes. Below is a structured blueprint you can feed directly to Claude Code to automate the migration.
+1. Router Migration: Express 
+ Hono
+Cloudflare Workers run in a sandboxed, low-overhead V8 isolate runtime instead of Node.js. Standard express does not run natively without heavy polyfills.
+Action: Have Claude Code rewrite the Express routers (/server/routes/*, server.ts) to Hono (hono).
+Why: Hono is the modern standard for Cloudflare Workers. It uses standard Web APIs (Request, Response, Fetch) and fits the exact same middleware and route patterns you see in your current server.
+2. Database Migration: better-sqlite3 
+ Cloudflare D1
+The current engine uses better-sqlite3 for high-speed synchronous disk queries. Cloudflare Workers cannot run native C/C++ Node extensions like better-sqlite3.
+Action: Move to Cloudflare D1 (Cloudflare's native serverless SQL/SQLite database).
+Asynchronous adjustment: better-sqlite3 queries are synchronous (e.g. stmt.run()), whereas Cloudflare D1's queries are asynchronous (await db.prepare().run()). Claude Code will need to systematically convert all SQL statements in /server/db.ts and database actions in your routing modules to be asynchronous (async/await).
+3. Multiplayer Integration: Cloudflare Durable Objects
+To implement true real-time, low-latency multiplayer capability, standard databases are not sufficient on their own.
+Action: Configure Cloudflare Durable Objects to house the combat sessions and travel states.
+Why: Durable Objects provide highly consistent, in-memory execution units that can handle WebSockets natively. Claude Code can route specific encounters or global chat channels through Durable Objects to synchronize dynamic combat rules and coordinate player actions instantaneously.
+4. JWT & Encryption Native Transition
+Action: Replace bcryptjs and jsonwebtoken with native Web Crypto APIs or libraries optimized for Workers like jose.
+Why: Native runtime Web Crypto keeps execution times under the 50ms default limit of Workers, saving cost and improving response time.
+5. Frontend & Asset Hosting: Cloudflare Pages
+Action: Configure wrangler to build and output assets via Cloudflare Pages.
+Wrangler config example (wrangler.json):
+code
+JSON
+{
+  "name": "wasteland-engine",
+  "main": "server.ts",
+  "compatibility_date": "2026-06-06",
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "wasteland_db",
+      "database_id": "<your-id-here>"
+    }
+  ]
+}
