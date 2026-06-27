@@ -848,9 +848,9 @@ export default function IsometricCombatView({
                 <h3 className="text-xs font-bold text-green-700 uppercase mb-4 border-b border-green-900 pb-1">Select Target Area</h3>
                 {['head', 'eyes', 'torso', 'arms', 'legs', 'groin'].map(part => {
                   const chance = calculateHitChance(part, vatsTarget);
-                  const limbKey = {
+                  const limbKey = ({
                     head: 'head', eyes: 'head', torso: 'torso', arms: 'right_arm', legs: 'right_leg', groin: 'torso'
-                  }[part as 'head' | 'eyes' | 'torso' | 'arms' | 'legs' | 'groin'];
+                  } as const)[part as 'head' | 'eyes' | 'torso' | 'arms' | 'legs' | 'groin'];
                   const limbHealth = vatsTarget.limb_condition ? vatsTarget.limb_condition[limbKey] : 100;
 
                   return (

@@ -59,6 +59,10 @@ export default function PipBoyOverlay({
     return () => clearTimeout(timer);
   }, []);
 
+  // The Pip-Boy is only meaningful with loaded character data; bail out cleanly
+  // if it is ever opened before the game state (and player) is available.
+  if (!player || !vitals || !stats) return null;
+
   return (
     <motion.div
       initial={{ opacity: 0, scale: 1.1, filter: 'brightness(2) blur(10px)' }}
