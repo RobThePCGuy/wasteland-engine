@@ -1,5 +1,4 @@
 import 'dotenv/config';
-import 'express-async-errors'; // forwards async-handler rejections to the error middleware (Express 4 does not)
 import path from 'path';
 import rateLimit from 'express-rate-limit';
 import express, { type Request, type Response, type NextFunction } from 'express';
@@ -82,7 +81,9 @@ async function startServer() {
   } else {
     const distPath = path.join(process.cwd(), 'dist');
     app.use(express.static(distPath));
-    app.get('*', (req, res) => {
+    // SPA fallback. Express 5 / path-to-regexp v8 no longer accepts a bare '*';
+    // '/{*splat}' is the equivalent named, optional catch-all (also matches '/').
+    app.get('/{*splat}', (req, res) => {
       res.sendFile(path.join(distPath, 'index.html'));
     });
   }
