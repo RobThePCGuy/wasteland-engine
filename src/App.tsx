@@ -509,7 +509,8 @@ export default function App() {
   if (view === 'auth') return <AuthScreen onLogin={handleLogin} onRegister={handleRegister} />;
   if (view === 'create') return <CharacterCreationScreen onCreate={handleCreate} />;
 
-  if (gameState?.player?.vitals?.hit_points <= 0) {
+  const playerHp = gameState?.player?.vitals?.hit_points;
+  if (playerHp !== undefined && playerHp <= 0) {
     return (
       <div className="crt h-screen bg-black text-red-500 font-mono p-4 flex flex-col items-center justify-center">
         <h1 className="text-6xl font-black mb-4 animate-pulse uppercase tracking-widest">You Died</h1>
@@ -564,7 +565,7 @@ export default function App() {
         <Group orientation="horizontal" className="flex-1 h-full">
           <Panel defaultSize={25} minSize={15} className="flex flex-col h-full">
             <div className="h-full flex flex-col gap-4 overflow-y-auto pr-2">
-              {combatState ? (
+              {combatState && gameState ? (
                 <CombatSidebar combatState={combatState} gameState={gameState} onAction={performCombatAction} onMove={performMove}
                   pendingAction={pendingAction} setPendingAction={setPendingAction}
                   selectedBodyPart={selectedBodyPart} setSelectedBodyPart={setSelectedBodyPart} isGenerating={isGenerating} />
@@ -583,7 +584,7 @@ export default function App() {
 
           <Panel defaultSize={45} minSize={20} className="flex flex-col h-full">
             <div className="h-full flex flex-col overflow-hidden">
-              {combatState ? (
+              {combatState && gameState ? (
                 <IsometricCombatView combatState={combatState} gameState={gameState} onAction={performCombatAction} onMove={performMove}
                   pendingAction={pendingAction} setPendingAction={setPendingAction}
                   selectedBodyPart={selectedBodyPart} setSelectedBodyPart={setSelectedBodyPart} isGenerating={isGenerating} />

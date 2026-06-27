@@ -159,8 +159,8 @@ interface IsometricExplorationViewProps {
       status_effects?: (string | StatusEffect)[];
     };
     equipment?: {
-      weapon_id?: number;
-      armor_id?: number;
+      weapon_id?: number | null;
+      armor_id?: number | null;
       ammo_in_clip?: number;
     };
   } | null;

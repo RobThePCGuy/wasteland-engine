@@ -86,7 +86,13 @@ export function executeNpcTurn(userId: number): ServiceResult {
     );
 
     if (decision.action === 'move') {
-      if (!combatMap || current.tile_x === undefined || current.tile_y === undefined) {
+      if (
+        !combatMap ||
+        current.tile_x === undefined ||
+        current.tile_y === undefined ||
+        decision.target_x === undefined ||
+        decision.target_y === undefined
+      ) {
         break;
       }
 
