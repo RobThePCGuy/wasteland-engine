@@ -23,7 +23,7 @@
     "express-rate-limit": "^8.7.0",
     "jsonwebtoken": "^9.0.3",
     "lucide-react": "^1.44.0",
-    "motion": "^12.43.0",
+    "motion": "^13.2.0",
     "react": "^19.3.0",
     "react-dom": "^19.3.0",
     "react-resizable-panels": "^4.12.4",
